@@ -64,4 +64,4 @@ signal(wrt_token);
 ~~~
 
 # Writer section logic
-In order to execute reading it waits for `write_token` semaphore. After holding `write_token` semaphore it increments `writers_count`. If now if `writers_count` is 1 which means this is first writing after one or more readings so now `wrt_token`  is held so that no reading is now executing. Now critical section executes. If now if `writers_count` is 0 which means this is the last writing process before one or more writings process. Now `write_token` is released so that another writer can start execution.
+In order to execute reading it waits for `write_token` semaphore. After holding `write_token` semaphore it increments `writers_count`. If now if `writers_count` is 1 which means this is first writing after one or more readings so now `wrt_token`  is held so that no reading is now executing. Now critical section executes and then `writers_count` is decremented. If now if `writers_count` is 0 which means this is the last writing process before one or more writings process. Now `write_token` is released so that another writer can start execution.
