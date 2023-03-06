@@ -46,7 +46,7 @@ signal(readers_count_mutex);
 ~~~
 
 # Reader section logic
-In order to execute reading it waits for `read_token` semaphore. After holding `read_token` semaphore it increments `readers_count` by holding `readers_count_mutex` before incrementing and then releases the semaphore. If now if `readers_count` is 1 which means this is first reading after one or more writings so now `wrt_token`  is held so that no writing is now executing. Now `read_token` is released before the critical section execution because reading can be done concurrently. Now critical section executes and readers_count is decremented by holding `readers_count_mutex` before decrementing and then releases the semaphore. If now if `readers_count` is 0 which means this is the last reading process before one or more writings process.
+In order to execute reading it waits for `read_token` semaphore. After holding `read_token` semaphore it increments `readers_count` by holding `readers_count_mutex` before incrementing and then releases the semaphore. If now `readers_count` is 1 which means this is first reading after one or more writings so now `wrt_token` is held so that no writing is now executing. Now `read_token` is released before the critical section execution because multiple readings can be done concurrently. Now critical section executes and readers_count is decremented by holding `readers_count_mutex` before decrementing and then releases the semaphore. If now if `readers_count` is 0 which means this is the last reading process before one or more writings process.
 
 # Writer section pseudocode
 ~~~cpp
